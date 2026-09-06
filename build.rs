@@ -1,5 +1,8 @@
 fn main() {
-    // Fix building from source on Windows because it can't handle file links.
+    // Windows does not support the file links used by Rustlings when building
+    // from source, so copy the development manifest instead.
     #[cfg(windows)]
-    let _ = std::fs::copy("dev/Cargo.toml", "dev-Cargo.toml");
+    if let Err(err) = std::fs::copy("dev/Cargo.toml", "dev-Cargo.toml") {
+        panic!("failed to copy dev/Cargo.toml: {err}");
+    }
 }
